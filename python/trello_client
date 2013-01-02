@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+def main():
+  #解决python 2.x中中文以ascii编码的错误
+  import sys
+  if sys.version_info.major < 3:
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
+  import optparse
+  p = optparse.OptionParser()
+  p.add_option('--organization', '-o', help = '获取组织信息')
+
+  options, arguments = p.parse_args()
+
+  if isNotGetOrgsList(options):
+    pass
+  else:
+    from trello import getOrgs
+    orgs = getData(getOrgs)
+    if orgs:
+      for org in orgs:
+        print(org['displayName'] + '（' + org['id'] + '）')
+
+def isNotGetOrgsList(options):
+  return options.organization
+
+def getData(function):
+  try:
+    dataSet = function(getConfigFileName())
+    return dataSet
+  except:
+    print('数据获取失败，请稍后重试。')
+    return None
+
+def getConfigFileName():
+  from os import path
+  return path.abspath(__file__ + '/../../config.json')
+
+if __name__ == '__main__':
+  main();

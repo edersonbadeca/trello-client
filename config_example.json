@@ -1,0 +1,14 @@
+{
+  "developerKeys":
+  {
+    "key": "",
+    "token": ""
+  },
+  "api":
+  {
+     "organization":
+     {
+        "list": "https://api.trello.com/1/members/my/organizations"
+     }
+  }
+}

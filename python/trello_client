@@ -38,7 +38,7 @@ def printOrgList():
   orgs = getData(getOrgs)
   if orgs:
     for org in orgs:
-      print(org['displayName'] + '（' + org['id'] + '）')
+      print(org['displayName'] + '（' + org['name'] + '）')
 
 def getData(function):
   try:

@@ -2,10 +2,17 @@
   "developerKeys":
   {
     "key": "",
-    "token": ""
+    "oauth_secret": "",
+    "expiration": "1day"
   },
   "api":
   {
+     "oauth":
+     {
+       "request_token": "https://trello.com/1/OAuthGetRequestToken",
+       "authorize": "https://trello.com/1/OAuthAuthorizeToken",
+       "access_token": "https://trello.com/1/OAuthGetAccessToken"
+     },
      "organization":
      {
         "list": "https://api.trello.com/1/members/my/organizations"

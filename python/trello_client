@@ -14,24 +14,43 @@ def main():
 
   options, arguments = p.parse_args()
 
+  if len(arguments) > 0 and arguments[0].lower() == 'oauth':
+    return oauth()
+
   if isNotGetOrgsList(options):
     pass
   else:
-    from trello import getOrgs
-    orgs = getData(getOrgs)
-    if orgs:
-      for org in orgs:
-        print(org['displayName'] + '（' + org['id'] + '）')
+    printOrgList()
 
 def isNotGetOrgsList(options):
   return options.organization
+
+def oauth():
+  from trello.oauth import Oauth
+  oauth = Oauth(getConfigFileName())
+  try:
+    oauth.oauth()
+  except:
+    print('用户信息验证失败。')
+
+def printOrgList():
+  from trello import getOrgs
+  orgs = getData(getOrgs)
+  if orgs:
+    for org in orgs:
+      print(org['displayName'] + '（' + org['id'] + '）')
 
 def getData(function):
   try:
     dataSet = function(getConfigFileName())
     return dataSet
   except:
-    print('数据获取失败，请稍后重试。')
+    from os import path
+    print(
+      '数据获取失败：请检查您的网络是否正常。\n' +
+      '如果网络正常请执行%s oauth进行用户信息验证'
+      % path.abspath(__file__)
+    )
     return None
 
 def getConfigFileName():
@@ -39,4 +58,4 @@ def getConfigFileName():
   return path.abspath(__file__ + '/../../config.json')
 
 if __name__ == '__main__':
-  main();
+  main()

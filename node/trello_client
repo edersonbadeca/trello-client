@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var main = require('./trello/main');
+
+getData(
+  main.getOrgs,
+  function(orgs) {
+    for (var index in orgs) {
+      console.log(orgs[index].displayName + '（' + orgs[index].name + '）');
+    }
+  }
+);
+
+function getData(call, callback)
+{
+  try{
+    call(getConfigFileName(), callback, errorGetData);
+
+  } catch(e) {
+    errorGetData();
+  }
+}
+
+function errorGetData()
+{
+  console.log('数据获取失败');
+}
+
+function getConfigFileName()
+{
+  return __dirname + '/../config.json';
+}

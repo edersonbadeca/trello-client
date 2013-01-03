@@ -9,7 +9,7 @@ def getOrgs(configFileName):
 
 def getAccessKey(configFileName):
   from os import path
-  with open(path.abspath(configFileName + '/../token'), 'a+') as fp:
+  with open(path.abspath(configFileName + '/../token'), 'r') as fp:
     data = fp.readlines()
     if len(data) != 2:
       return dict(key = '', token = '')

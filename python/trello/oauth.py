@@ -42,5 +42,5 @@ class Oauth:
     accessToken = dict(urlparse.parse_qsl(content))
 
     from os import path
-    with open(path.abspath(self.configFileName + '/../token'), 'a+') as fp:
+    with open(path.abspath(self.configFileName + '/../token'), 'w') as fp:
       fp.write(self.developerKeys['key'] + '\n' + accessToken['oauth_token'])

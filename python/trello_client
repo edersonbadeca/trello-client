@@ -9,23 +9,24 @@ def main():
     sys.setdefaultencoding('utf8')
 
   import optparse
-  p = optparse.OptionParser()
-  p.add_option('--organization', '-o', help = '获取组织信息')
+  parser = optparse.OptionParser()
+  parser.add_option(
+    '--auth', '-a', action = 'store_true', help = '进行用户信息验证'
+  )
+  parser.add_option(
+    '--organization', '-o', action = 'store_true', help = '获取组织信息'
+  )
+  options, arguments = parser.parse_args()
 
-  options, arguments = p.parse_args()
+  if options.auth:
+    return auth()
 
-  if len(arguments) > 0 and arguments[0].lower() == 'oauth':
-    return oauth()
+  if options.organization:
+    return printOrgList()
 
-  if isNotGetOrgsList(options):
-    pass
-  else:
-    printOrgList()
+  print(parser.print_help())
 
-def isNotGetOrgsList(options):
-  return options.organization
-
-def oauth():
+def auth():
   from trello.oauth import Oauth
   oauth = Oauth(getConfigFileName())
   try:

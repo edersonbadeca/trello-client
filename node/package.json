@@ -1,0 +1,13 @@
+{
+  "name": "trello_client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts":
+  {
+    "start": "node trello_client"
+  },
+  "dependencies":
+  {
+    "oauth": "*"
+  }
+}

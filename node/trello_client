@@ -4,6 +4,14 @@ var main = require('./trello/main');
 var optparse = require('./trello/optparse');
 
 optparse.init('trello_client');
+optparse.addOption('--auth', '-a', '进行用户信息验证', function() {
+  try {
+    require('./trello/oauth')(getConfigFileName());
+  } catch(e) {
+    console.log('用户信息验证失败。');
+  }
+});
+
 optparse.addOption('--organization', '-o', '获取组织信息', function() {
   getData(main.getOrgs, function(orgs) {
     for(var index in orgs) {
@@ -15,17 +23,20 @@ optparse.run();
 
 function getData(call, callback)
 {
+  function errorGetData()
+  {
+    console.log(
+      '数据获取失败：请检查您的网络是否正常。\n' +
+      '如果网络正常请执行%s auth进行用户信息验证',
+      __filename
+    );
+  }
+
   try{
     call(getConfigFileName(), callback, errorGetData);
-
   } catch(e) {
     errorGetData();
   }
-}
-
-function errorGetData()
-{
-  console.log('数据获取失败');
 }
 
 function getConfigFileName()

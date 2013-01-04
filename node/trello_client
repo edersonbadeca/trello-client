@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
 var main = require('./trello/main');
+var optparse = require('./trello/optparse');
 
-getData(
-  main.getOrgs,
-  function(orgs) {
-    for (var index in orgs) {
-      console.log(orgs[index].displayName + '（' + orgs[index].name + '）');
+optparse.init('trello_client');
+optparse.addOption('--organization', '-o', '获取组织信息', function() {
+  getData(main.getOrgs, function(orgs) {
+    for(var index in orgs) {
+      console.log('%s（%s）', orgs[index].displayName, orgs[index].name);
     }
-  }
-);
+  });
+});
+optparse.run();
 
 function getData(call, callback)
 {

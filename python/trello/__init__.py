@@ -17,7 +17,7 @@ def getOrgInfo(configFileName, orgName):
   return getData(
     '%s/%s' %
     (getConfig(configFileName).getApi('organization', 'item'), orgName),
-    getAccessKey(configFileName)
+    getAccessKey(configFileName), '&members=admins'
   )
 
 def getConfig(configFileName):
@@ -32,13 +32,14 @@ def getAccessKey(configFileName):
       return dict(key = '', token = '')
     return dict(key = data[0].strip(), token = data[1].strip())
 
-def getData(api, accessKeys):
+def getData(api, accessKeys, queryString = ''):
   if not accessKeys['key'] or not accessKeys['token']:
     raise Exception('无效的用户验证信息')
 
   from urllib2 import urlopen
   data = urlopen(
-    '%s?key=%s&token=%s' % (api, accessKeys['key'], accessKeys['token'])
+    '%s?key=%s&token=%s%s' %
+    (api, accessKeys['key'], accessKeys['token'], queryString)
   ).read()
 
   import json

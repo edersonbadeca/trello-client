@@ -30,6 +30,12 @@ def printOrgInfo(orgName):
     print('Trello链接：%s' % orgInfo['url'])
     print('官网：%s' % orgInfo['website'])
     print('描述：%s' % orgInfo['desc'])
+    if orgInfo['members']:
+      admins = [
+        '%s（%s）' % (member['fullName'], member['username'])
+        for member in orgInfo['members']
+      ]
+      print('管理员：%s' % '，'.join(admins))
 
 def getData(function, *args):
   try:

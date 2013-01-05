@@ -14,6 +14,10 @@ def main():
     '--auth', '-a', action = 'store_true', help = '进行用户信息验证'
   )
   parser.add_option(
+    '--member', '-m', action = 'store_true', help = '获取成员信息'
+  )
+
+  parser.add_option(
     '--organization', '-o', action = 'store_true', help = '获取组织信息'
   )
   options, arguments = parser.parse_args()
@@ -22,7 +26,12 @@ def main():
     return auth()
 
   if options.organization:
-    return printOrgList()
+    if len(arguments) == 0:
+      return printOrgList()
+    elif options.member:
+      return printOrgMembers(arguments[0])
+    else:
+      return printOrgInfo(arguments[0])
 
   print(parser.print_help())
 
@@ -41,9 +50,25 @@ def printOrgList():
     for org in orgs:
       print(org['displayName'] + '（' + org['name'] + '）')
 
-def getData(function):
+def printOrgMembers(orgName):
+  from trello import getOrgMembers
+  members = getData(getOrgMembers, orgName)
+  if members:
+    for member in members:
+      print(member['fullName'] + '（' + member['username'] + '）')
+
+def printOrgInfo(orgName):
+  from trello import getOrgInfo
+  orgInfo = getData(getOrgInfo, orgName)
+  if orgInfo:
+    print('名称：%s（%s）' % (orgInfo['displayName'], orgInfo['name']))
+    print('Trello链接：%s' % orgInfo['url'])
+    print('官网：%s' % orgInfo['website'])
+    print('描述：%s' % orgInfo['desc'])
+
+def getData(function, *arg):
   try:
-    dataSet = function(getConfigFileName())
+    dataSet = function(getConfigFileName(), *arg)
     return dataSet
   except:
     from os import path

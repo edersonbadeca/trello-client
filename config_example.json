@@ -15,7 +15,8 @@
      },
      "organization":
      {
-        "list": "https://api.trello.com/1/members/my/organizations"
+        "list": "https://api.trello.com/1/members/my/organizations",
+        "item": "https://api.trello.com/1/organizations"
      }
   }
 }

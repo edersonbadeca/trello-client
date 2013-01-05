@@ -7,6 +7,22 @@ def getOrgs(configFileName):
     config.getApi('organization', 'list'), getAccessKey(configFileName)
   )
 
+def getOrgMembers(configFileName, orgName):
+  from config import Config
+  config = Config(configFileName)
+  return getData(
+    '%s/%s/members' % (config.getApi('organization', 'item'), orgName),
+    getAccessKey(configFileName)
+  )
+
+def getOrgInfo(configFileName, orgName):
+  from config import Config
+  config = Config(configFileName)
+  return getData(
+    '%s/%s' % (config.getApi('organization', 'item'), orgName),
+    getAccessKey(configFileName)
+  )
+
 def getAccessKey(configFileName):
   from os import path
   with open(path.abspath(configFileName + '/../token'), 'r') as fp:

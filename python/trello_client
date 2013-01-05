@@ -22,18 +22,18 @@ def main():
   )
   options, arguments = parser.parse_args()
 
-  import command
+  import run
 
   if options.auth:
-    return command.auth()
+    return run.auth()
 
   if options.organization:
     if len(arguments) == 0:
-      return command.printOrgList()
+      return run.printOrgList()
     elif options.member:
-      return command.printOrgMembers(arguments[0])
+      return run.printOrgMembers(arguments[0])
     else:
-      return command.printOrgInfo(arguments[0])
+      return run.printOrgInfo(arguments[0])
 
   print(parser.print_help())
 

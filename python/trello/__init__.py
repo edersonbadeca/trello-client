@@ -1,27 +1,28 @@
 #-*- coding:utf-8 -*-
 
 def getOrgs(configFileName):
-  from config import Config
-  config = Config(configFileName)
   return getData(
-    config.getApi('organization', 'list'), getAccessKey(configFileName)
+    getConfig(configFileName).getApi('organization', 'list'),
+    getAccessKey(configFileName)
   )
 
 def getOrgMembers(configFileName, orgName):
-  from config import Config
-  config = Config(configFileName)
   return getData(
-    '%s/%s/members' % (config.getApi('organization', 'item'), orgName),
+    '%s/%s/members' %
+    (getConfig(configFileName).getApi('organization', 'item'), orgName),
     getAccessKey(configFileName)
   )
 
 def getOrgInfo(configFileName, orgName):
-  from config import Config
-  config = Config(configFileName)
   return getData(
-    '%s/%s' % (config.getApi('organization', 'item'), orgName),
+    '%s/%s' %
+    (getConfig(configFileName).getApi('organization', 'item'), orgName),
     getAccessKey(configFileName)
   )
+
+def getConfig(configFileName):
+  from config import Config
+  return Config(configFileName)
 
 def getAccessKey(configFileName):
   from os import path
@@ -39,5 +40,6 @@ def getData(api, accessKeys):
   data = urlopen(
     '%s?key=%s&token=%s' % (api, accessKeys['key'], accessKeys['token'])
   ).read()
+
   import json
   return json.loads(data)

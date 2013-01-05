@@ -31,9 +31,9 @@ def printOrgInfo(orgName):
     print('官网：%s' % orgInfo['website'])
     print('描述：%s' % orgInfo['desc'])
 
-def getData(function, *arg):
+def getData(function, *args):
   try:
-    dataSet = function(getConfigFileName(), *arg)
+    dataSet = function(getConfigFileName(), *args)
     return dataSet
   except:
     from os import path

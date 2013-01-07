@@ -16,24 +16,22 @@ def main():
   parser.add_option(
     '--member', '-m', action = 'store_true', help = '获取成员信息'
   )
-
   parser.add_option(
     '--organization', '-o', action = 'store_true', help = '获取组织信息'
   )
   options, arguments = parser.parse_args()
 
-  import run
+  from os import path
+  configFileName = path.abspath(__file__ + '/../../config.json')
 
   if options.auth:
-    return run.auth()
+    from trello import Trello
+    trello = Trello(configFileName)
+    return trello.auth()
 
   if options.organization:
-    if len(arguments) == 0:
-      return run.printOrgList()
-    elif options.member:
-      return run.printOrgMembers(arguments[0])
-    else:
-      return run.printOrgInfo(arguments[0])
+    from trello.org import run
+    return run(configFileName, options, arguments)
 
   print(parser.print_help())
 

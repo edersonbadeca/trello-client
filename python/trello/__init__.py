@@ -1,46 +1,56 @@
 #-*- coding:utf-8 -*-
 
-def getOrgs(configFileName):
-  return getData(
-    getConfig(configFileName).getApi('organization', 'list'),
-    getAccessKey(configFileName)
-  )
+class Trello:
+  def __init__(self, configFileName):
+    self.configFileName = configFileName
 
-def getOrgMembers(configFileName, orgName):
-  return getData(
-    '%s/%s/members' %
-    (getConfig(configFileName).getApi('organization', 'item'), orgName),
-    getAccessKey(configFileName)
-  )
+  def auth(self):
+    from oauth import Oauth
+    oauth = Oauth(self.configFileName)
+    try:
+      oauth.oauth()
+    except:
+      print('用户信息验证失败')
 
-def getOrgInfo(configFileName, orgName):
-  return getData(
-    '%s/%s' %
-    (getConfig(configFileName).getApi('organization', 'item'), orgName),
-    getAccessKey(configFileName), '&members=admins'
-  )
+  def getConfig(self):
+    from config import Config
+    return Config(self.configFileName)
 
-def getConfig(configFileName):
-  from config import Config
-  return Config(configFileName)
+  def getData(self, api, queryString = ''):
+    def printErrorMessage():
+      from os import path
+      print(
+        '数据获取失败：请检查您的网络是否正常。\n' +
+        '如果网络正常请执行%s auth进行用户信息验证'
+        % path.abspath(__file__ + '/../../trello_client')
+    )
 
-def getAccessKey(configFileName):
-  from os import path
-  with open(path.abspath(configFileName + '/../token'), 'r') as fp:
-    data = fp.readlines()
-    if len(data) != 2:
+    accessKeys = self._getAccessKey()
+    if not accessKeys['key'] or not accessKeys['token']:
+      printErrorMessage()
+      return None
+
+    from urllib2 import urlopen
+    try:
+      data = urlopen(
+        '%s?key=%s&token=%s%s' %
+        (api, accessKeys['key'], accessKeys['token'], queryString)
+      ).read()
+
+      import json
+      return json.loads(data)
+    except:
+      printErrorMessage()
+      return None
+
+  def _getAccessKey(self):
+    from os import path
+    tokenFile = path.abspath(self.configFileName + '/../token')
+    if not path.exists(tokenFile):
       return dict(key = '', token = '')
-    return dict(key = data[0].strip(), token = data[1].strip())
 
-def getData(api, accessKeys, queryString = ''):
-  if not accessKeys['key'] or not accessKeys['token']:
-    raise Exception('无效的用户验证信息')
-
-  from urllib2 import urlopen
-  data = urlopen(
-    '%s?key=%s&token=%s%s' %
-    (api, accessKeys['key'], accessKeys['token'], queryString)
-  ).read()
-
-  import json
-  return json.loads(data)
+    with open(path.abspath(tokenFile), 'r') as fp:
+      data = fp.readlines()
+      if len(data) != 2:
+        return dict(key = '', token = '')
+      return dict(key = data[0].strip(), token = data[1].strip())

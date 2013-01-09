@@ -25,7 +25,7 @@ def main():
   configFileName = path.abspath(__file__ + '/../../config.json')
 
   if options.auth:
-    from trello import Trello
+    from trello.trello import Trello
     trello = Trello(configFileName)
     return trello.auth()
 

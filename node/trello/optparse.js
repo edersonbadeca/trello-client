@@ -6,12 +6,11 @@ var Optparse = {
     Optparse.options['help'] = {
       name: '--help',
       shortName: '-h',
-      help: '显示帮助信息',
-      callback: Optparse.printHelp
+      help: '显示帮助信息'
     };
   },
 
-  addOption: function(name, shortName, help, callback)
+  addOption: function(name, shortName, help)
   {
     for (var key in Optparse.options) {
       if (Optparse.options[key].name == name
@@ -30,32 +29,44 @@ var Optparse = {
     Optparse.options[optionId] = {
       name: name,
       shortName: shortName,
-      help: help,
-      callback: callback
+      help: help
     };
   },
 
-  run: function()
+  run: function(callback)
   {
     argv = process.argv.splice(2);
     if(argv.length <= 0) {
       return Optparse.printHelp();
     }
 
-    var command = [];
     for (var index in argv) {
+      if (argv[index].length > 2 && /^-[^-]*$/.test(argv[index])) {
+        argv[index] = argv[index].substr(1);
+        for (var charIndex in argv[index]) {
+          argv.push('-' + argv[index][charIndex]);
+        }
+        argv.splice(index, 1);
+      }
+    }
+
+    var command = [];
+    var arguments = {};
+    for (index in argv) {
       if(argv[index] == '-h' || argv[index] == '--help'
         || argv[index] == 'help'
       ) {
         return Optparse.printHelp();
       }
+
       for (var optionId in Optparse.options) {
         if (optionId == argv[index]
           || Optparse.options[optionId].name == argv[index]
           || Optparse.options[optionId].shortName == argv[index]
         ) {
-          argv.splice(index, 1);
-          command.push(Optparse.options[optionId].callback);
+          command.push(optionId);
+        } else if(!/^-{1,2}[^-]*$/.test(argv[index])) {
+          arguments[argv[index]] = argv[index];
         }
       }
     }
@@ -64,9 +75,18 @@ var Optparse = {
       return Optparse.printHelp();
     }
 
+    var options = {};
     for (index in command) {
-      command[index](argv);
+      options[command[index]] = true;
     }
+
+    var argumentsTemp = [];
+    for (index in arguments) {
+      argumentsTemp.push(arguments[index]);
+    }
+    arguments = argumentsTemp;
+
+    callback(options, arguments);
   },
 
   printHelp: function()

@@ -1,45 +1,22 @@
 #!/usr/bin/env node
 
-var main = require('./trello/main');
 var optparse = require('./trello/optparse');
 
 optparse.init('trello_client');
-optparse.addOption('--auth', '-a', '进行用户信息验证', function() {
-  try {
-    require('./trello/oauth')(getConfigFileName());
-  } catch(e) {
-    console.log('用户信息验证失败。');
+optparse.addOption('--auth', '-a', '进行用户信息验证');
+optparse.addOption('--member', '-m', '获取成员信息');
+optparse.addOption('--organization', '-o', '获取组织信息');
+optparse.run(function(options, arguments) {
+  var configFileName = __dirname + '/../config.json';
+  if (options.auth) {
+    var trello = require('./trello/trello');
+    trello.init(configFileName);
+    return trello.auth();
   }
-});
 
-optparse.addOption('--organization', '-o', '获取组织信息', function() {
-  getData(main.getOrgs, function(orgs) {
-    for(var index in orgs) {
-      console.log('%s（%s）', orgs[index].displayName, orgs[index].name);
-    }
-  });
-});
-optparse.run();
-
-function getData(call, callback)
-{
-  function errorGetData()
-  {
-    console.log(
-      '数据获取失败：请检查您的网络是否正常。\n' +
-      '如果网络正常请执行%s auth进行用户信息验证',
-      __filename
+  if (options.organization) {
+    return require('./trello/org/init').run(
+      configFileName, options, arguments
     );
   }
-
-  try{
-    call(getConfigFileName(), callback, errorGetData);
-  } catch(e) {
-    errorGetData();
-  }
-}
-
-function getConfigFileName()
-{
-  return __dirname + '/../config.json';
-}
+});

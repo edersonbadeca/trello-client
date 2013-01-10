@@ -19,9 +19,10 @@ var Oauth = {
         }
         console.log('请通过以下地址获取verifier信息：');
         console.log(
-          '%s?oauth_token=%s&expiration=%s&scope=read,write',
+          '%s?oauth_token=%s&expiration=%s&scope=%s',
           config.getApi('oauth', 'authorize'),
-          oauth_token, developerKeys.expiration
+          oauth_token, developerKeys.expiration,
+          developerKeys.access
         );
         var readLine = require('readline').createInterface({
           input: process.stdin,

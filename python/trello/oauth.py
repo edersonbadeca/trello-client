@@ -26,10 +26,10 @@ class Oauth:
     import urlparse
     requestToken = dict(urlparse.parse_qsl(content))
     print('请通过以下地址获取verifier信息：')
-    print('%s?oauth_token=%s&expiration=%s&scope=read,write' %
+    print('%s?oauth_token=%s&expiration=%s&scope=%s' %
       (
         self.urls['authorize'], requestToken['oauth_token'],
-        self.developerKeys['expiration']
+        self.developerKeys['expiration'], self.developerKeys['access']
       )
     )
     verifier = raw_input('请输入您的verifier信息：')

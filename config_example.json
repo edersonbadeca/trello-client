@@ -3,7 +3,8 @@
   {
     "key": "",
     "oauth_secret": "",
-    "expiration": "1day" // 1day, 30days, never
+    "expiration": "1day", // 1day, 30days, never
+    "access": "read" //read, write
   },
   "api":
   {

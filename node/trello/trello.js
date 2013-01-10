@@ -40,7 +40,11 @@ var Trello = {
     api += '?key=' + accessKeys['key'] + '&token=' + accessKeys['token'] + queryString;
     require('https').get(api, function(response) {
       response.on('data', function(data) {
-        callback(JSON.parse(data.toString()));
+        try {
+          callback(JSON.parse(data.toString()));
+        } catch(e) {
+          printErrorMessage();
+        }
       });
     }).on('error', printErrorMessage);
   },

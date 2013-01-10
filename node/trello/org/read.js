@@ -8,7 +8,7 @@ var Read = {
   orgs: function()
   {
     Read.trello.getData(
-      Read.config.getApi(Read.key, 'list'), null,
+      Read.config.getApi(Read.key, 'list'), '&fields=displayName,name',
       function(orgs) {
         if (orgs) {
           for(var index in orgs) {

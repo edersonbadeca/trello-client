@@ -7,7 +7,9 @@ class Read(Base):
     self.key = 'organization'
 
   def orgs(self):
-    orgs = self.trello.getData(self.config.getApi(self.key, 'list'))
+    orgs = self.trello.getData(
+      self.config.getApi(self.key, 'list'), '&fields=displayName,name'
+    )
     if orgs:
       for org in orgs:
         print(org['displayName'] + '（' + org['name'] + '）')

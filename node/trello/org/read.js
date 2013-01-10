@@ -58,6 +58,21 @@ var Read = {
         }
       }
     );
+  },
+
+  boards: function(name)
+  {
+    Read.trello.getData(
+      Read.config.getApi(Read.key, 'item') + '/' + name + '/boards',
+      '&filter=organization&fields=name',
+      function(boards) {
+        if (boards) {
+          for (var index in boards) {
+            console.log(boards[index].name);
+          }
+        }
+      }
+    );
   }
 };
 

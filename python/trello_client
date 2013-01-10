@@ -17,6 +17,9 @@ def main():
     '--member', '-m', action = 'store_true', help = '获取成员信息'
   )
   parser.add_option(
+    '--board', '-b', action = 'store_true', help = '获取版块信息'
+  )
+  parser.add_option(
     '--organization', '-o', action = 'store_true', help = '获取组织信息'
   )
   options, arguments = parser.parse_args()

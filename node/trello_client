@@ -5,6 +5,7 @@ var optparse = require('./trello/optparse');
 optparse.init('trello_client');
 optparse.addOption('--auth', '-a', '进行用户信息验证');
 optparse.addOption('--member', '-m', '获取成员信息');
+optparse.addOption('--board', '-b', '获取版块信息');
 optparse.addOption('--organization', '-o', '获取组织信息');
 optparse.run(function(options, arguments) {
   var configFileName = __dirname + '/../config.json';

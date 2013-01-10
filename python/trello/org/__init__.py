@@ -10,5 +10,8 @@ def run(configFileName, options, arguments):
   if options.member:
     return read.members(arguments[0])
 
+  if options.board:
+    return read.boards(arguments[0])
+
   return read.info(arguments[0])
 

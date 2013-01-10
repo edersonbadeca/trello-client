@@ -42,8 +42,11 @@ class Read(Base):
   def boards(self, name):
     boards = self.trello.getData(
       '%s/%s/boards' % (self.config.getApi(self.key, 'item'), name),
-      '&filter=organization&fields=name'
+      '&filter=organization&fields=name,pinned'
     )
     if boards:
       for board in boards:
-        print(board['name'])
+        print(
+          '%s（%s）' %
+          (board['name'], '已加入' if board['pinned'] else '未加入' )
+        )

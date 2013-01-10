@@ -64,11 +64,15 @@ var Read = {
   {
     Read.trello.getData(
       Read.config.getApi(Read.key, 'item') + '/' + name + '/boards',
-      '&filter=organization&fields=name',
+      '&filter=organization&fields=name,pinned',
       function(boards) {
         if (boards) {
           for (var index in boards) {
-            console.log(boards[index].name);
+            console.log(
+              '%s（%s）',
+              boards[index].name,
+              boards[index].pinned ? '已加入' : '未加入'
+            );
           }
         }
       }

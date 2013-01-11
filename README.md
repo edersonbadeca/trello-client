@@ -2,6 +2,17 @@
 
 一个用python（node）实现的Trello客户端。
 
+#安装配置
+
+```shell
+cd ~/
+wget https://nodeload.github.com/NanJingBoy/trello-client/zip/master
+unzip master
+cd trello-client-master
+cp config_example.json config.json
+vim config.json //修改developerKeys节点中key和oauth_secret的值;并删除文件中所有注释语句
+```
+
 #命令列表（此处仅以python版为例，node命令列表相同）
 
 ```shell

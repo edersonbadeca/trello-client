@@ -11,8 +11,11 @@ unzip master
 cd trello-client-master
 cp config_example.json config.json
 vim config.json //修改developerKeys节点中key和oauth_secret的值;并删除文件中所有注释语句
-```
 
+pip install oauth2 //安装python相关依赖
+cd ~/trello-client-master/node
+npm install oauth //安装node相关依赖
+```
 #命令列表（此处仅以python版为例，node命令列表相同）
 
 ```shell

@@ -1,7 +1,7 @@
 var Read = {
   init: function(configFileName)
   {
-    require('../base').init(Read, configFileName);
+    require('../base/read').init(Read, configFileName);
     Read.key = 'organization';
   },
 
@@ -21,17 +21,8 @@ var Read = {
 
   members: function(name)
   {
-    Read.trello.getData(
-      Read.config.getApi(Read.key, 'item') + '/' + name + '/members', null,
-      function(members) {
-        if (members) {
-          for (var index in members) {
-            console.log(
-              '%s（%s）', members[index].fullName, members[index].username
-            );
-          }
-        }
-      }
+    Read.super_callback.members(
+      Read.config.getApi(Read.key, 'item') + '/' + name + '/members'
     );
   },
 

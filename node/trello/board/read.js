@@ -42,8 +42,8 @@ var Read = {
         if (lists) {
           for (var index in lists) {
             console.log(
-              '%s（%s）',
-              lists[index].name,
+              '%s（%s）：%s',
+              lists[index].name, lists[index].id,
               lists[index].closed ? '已关闭' : '未关闭'
             );
           }

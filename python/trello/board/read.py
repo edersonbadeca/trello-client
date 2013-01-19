@@ -24,3 +24,18 @@ class Read(ReadBase):
     super(Read, self).members(
       '%s/%s/members' % (self.baseUrl, boardId)
     )
+
+  def lists(self, boardId):
+    lists = self.trello.getData(
+      '%s/%s/lists' % (self.baseUrl, boardId),
+      '&fields=name,closed'
+    )
+    if lists:
+      for item in lists:
+        print(
+          '%s（%s）：%s' %
+          (
+            item['name'], item['id'],
+            '已关闭' if item['closed'] else '未关闭'
+          )
+        )

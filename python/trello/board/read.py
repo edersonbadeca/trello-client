@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-from trello.base.read import ReadBase
+from trello.base.read import Read as ReadBase
 
 class Read(ReadBase):
   def __init__(self, configFileName):

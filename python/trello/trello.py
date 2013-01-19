@@ -20,8 +20,8 @@ class Trello:
     def printErrorMessage():
       from os import path
       print(
-        '数据获取失败：请检查您的网络是否正常。\n' +
-        '如果网络正常请执行%s auth进行用户信息验证'
+        '数据获取失败：网络异常或相关资源不存在。\n' +
+        '如果网络正常且存在相关资源请执行%s auth进行用户信息验证'
         % path.abspath(__file__ + '/../../trello_client')
     )
 

@@ -60,8 +60,8 @@ var Read = {
         if (boards) {
           for (var index in boards) {
             console.log(
-              '%s（%s）',
-              boards[index].name,
+              '%s（%s）：%s',
+              boards[index].name, boards[index].id,
               boards[index].pinned ? '已加入' : '未加入'
             );
           }

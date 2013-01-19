@@ -6,9 +6,9 @@ class Read(ReadBase):
     super(Read, self).__init__(configFileName)
     self.baseUrl = self.config.getApi('board', 'item')
 
-  def info(self, boardId):
+  def info(self, id):
     info = self.trello.getData(
-      '%s/%s' % (self.baseUrl, boardId),
+      '%s/%s' % (self.baseUrl, id),
       '&fields=name,desc,closed,pinned,url'
     )
     if info:
@@ -20,14 +20,14 @@ class Read(ReadBase):
       print('链接：%s' % info['url'])
       print('描述：%s' % info['desc'])
 
-  def members(self, boardId):
+  def members(self, id):
     super(Read, self).members(
-      '%s/%s/members' % (self.baseUrl, boardId)
+      '%s/%s/members' % (self.baseUrl, id)
     )
 
-  def lists(self, boardId):
+  def lists(self, id):
     lists = self.trello.getData(
-      '%s/%s/lists' % (self.baseUrl, boardId),
+      '%s/%s/lists' % (self.baseUrl, id),
       '&fields=name,closed'
     )
     if lists:

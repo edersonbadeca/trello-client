@@ -2,6 +2,6 @@
 
 class Base(object):
   def __init__(self, configFileName):
-    from trello import Trello
+    from trello.trello import Trello
     self.trello = Trello(configFileName)
     self.config = self.trello.getConfig()

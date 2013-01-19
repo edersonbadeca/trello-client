@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
-from trello.base import Base
+from trello.base.read import Read as ReadBase
 
-class Read(Base):
+class Read(ReadBase):
   def __init__(self, configFileName):
     super(Read, self).__init__(configFileName)
     self.key = 'organization'
@@ -15,12 +15,9 @@ class Read(Base):
         print(org['displayName'] + '（' + org['name'] + '）')
 
   def members(self, name):
-    members = self.trello.getData(
+    super(Read, self).members(
       '%s/%s/members' % (self.config.getApi(self.key, 'item'), name)
     )
-    if members:
-      for member in members:
-        print(member['fullName'] + '（' + member['username'] + '）')
 
   def info(self, name):
     info = self.trello.getData(
@@ -29,7 +26,7 @@ class Read(Base):
     )
     if info:
       print('名称：%s（%s）' % (info['displayName'], info['name']))
-      print('Trello链接：%s' % info['url'])
+      print('链接：%s' % info['url'])
       print('官网：%s' % info['website'])
       print('描述：%s' % info['desc'])
       if info['members']:
@@ -47,6 +44,9 @@ class Read(Base):
     if boards:
       for board in boards:
         print(
-          '%s（%s）' %
-          (board['name'], '已加入' if board['pinned'] else '未加入' )
+          '%s（%s）：%s' %
+          (
+            board['name'], board['id'],
+            '已加入' if board['pinned'] else '未加入'
+          )
         )

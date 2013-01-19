@@ -4,7 +4,7 @@ from trello.base.read import ReadBase
 class Read(ReadBase):
   def __init__(self, configFileName):
     super(Read, self).__init__(configFileName)
-    self.baseUrl = self.config.getApi('boards', 'item')
+    self.baseUrl = self.config.getApi('board', 'item')
 
   def info(self, boardId):
     info = self.trello.getData(

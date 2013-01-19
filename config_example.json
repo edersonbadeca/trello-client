@@ -22,6 +22,10 @@
      "board":
      {
         "item": "https://api.trello.com/1/boards"
+     },
+     "lists":
+     {
+        "item": "https://api.trello.com/1/lists"
      }
   }
 }

@@ -21,7 +21,11 @@ def main():
   )
 
   parser.add_option(
-    '--lists', '-l', action = 'store_true', help = '获取模块列表信息'
+    '--lists', '-l', action = 'store_true', help = '获取列表信息'
+  )
+
+  parser.add_option(
+    '--card', '-c', action = 'store_true', help = '获取卡片信息'
   )
 
   parser.add_option(
@@ -43,6 +47,10 @@ def main():
 
   if options.board and len(arguments) > 0:
     from trello.board import run
+    return run(configFileName, options, arguments)
+
+  if options.lists and len(arguments) > 0:
+    from trello.lists import run
     return run(configFileName, options, arguments)
 
   print(parser.print_help())

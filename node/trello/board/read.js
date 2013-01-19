@@ -8,7 +8,8 @@ var Read = {
   info: function(id)
   {
     Read.trello.getData(
-      Read.baseUrl + '/' + id, '&fields=name,desc,closed,pinned,url',
+      Read.baseUrl + '/' + id,
+      '&fields=name,desc,closed,pinned,url,subscribed',
       function(info) {
         if (info) {
           console.log(
@@ -16,6 +17,7 @@ var Read = {
             info.pinned ? '已加入' : '未加入'
           );
           console.log('关闭：%s', info.closed ? '是' : '否');
+          console.log('订阅：%s', info.subscribed ? '是' : '否');
           console.log('链接：%s', info.url);
           console.log('描述：%s', info.desc);
 

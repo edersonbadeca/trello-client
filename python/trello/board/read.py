@@ -9,7 +9,7 @@ class Read(ReadBase):
   def info(self, id):
     info = self.trello.getData(
       '%s/%s' % (self.baseUrl, id),
-      '&fields=name,desc,closed,pinned,url'
+      '&fields=name,desc,closed,pinned,url,subscribed'
     )
     if info:
       print(
@@ -17,6 +17,7 @@ class Read(ReadBase):
         (info['name'], info['id'], '已加入' if info['pinned'] else '未加入')
       )
       print('关闭：%s' % ('是' if info['closed'] else '否'))
+      print('订阅：%s' % ('是' if info['subscribed'] else '否'))
       print('链接：%s' % info['url'])
       print('描述：%s' % info['desc'])
 

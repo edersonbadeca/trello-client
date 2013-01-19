@@ -19,6 +19,11 @@ def main():
   parser.add_option(
     '--board', '-b', action = 'store_true', help = '获取版块信息'
   )
+
+  parser.add_option(
+    '--lists', '-l', action = 'store_true', help = '获取模块列表信息'
+  )
+
   parser.add_option(
     '--organization', '-o', action = 'store_true', help = '获取组织信息'
   )
@@ -34,6 +39,10 @@ def main():
 
   if options.organization:
     from trello.org import run
+    return run(configFileName, options, arguments)
+
+  if options.board and len(arguments) > 0:
+    from trello.board import run
     return run(configFileName, options, arguments)
 
   print(parser.print_help())

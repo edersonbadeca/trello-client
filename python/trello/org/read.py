@@ -24,13 +24,13 @@ class Read(ReadBase):
       print('名称：%s（%s）' % (info['displayName'], info['name']))
       print('链接：%s' % info['url'])
       print('官网：%s' % info['website'])
-      print('描述：%s' % info['desc'])
       if info['members']:
         admins = [
           '%s（%s）' % (member['fullName'], member['username'])
           for member in info['members']
         ]
         print('管理员：%s' % '，'.join(admins))
+      print('描述：%s' % info['desc'])
 
   def boards(self, name):
     boards = self.trello.getData(

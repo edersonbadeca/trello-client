@@ -35,5 +35,11 @@ optparse.run(function(options, arguments) {
     );
   }
 
+  if (options.card && arguments.length > 0) {
+    return require('./trello/card/init').run(
+      configFileName, options, arguments
+    );
+  }
+
   optparse.print_help();
 });

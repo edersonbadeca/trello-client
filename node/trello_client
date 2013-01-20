@@ -41,5 +41,5 @@ optparse.run(function(options, arguments) {
     );
   }
 
-  optparse.print_help();
+  optparse.printHelp();
 });

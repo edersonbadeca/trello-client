@@ -26,6 +26,10 @@
      "lists":
      {
         "item": "https://api.trello.com/1/lists"
+     },
+     "card":
+     {
+        "item": "https://api.trello.com/1/cards"
      }
   }
 }

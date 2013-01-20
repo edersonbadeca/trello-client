@@ -53,6 +53,10 @@ def main():
     from trello.lists import run
     return run(configFileName, options, arguments)
 
+  if options.card and len(arguments) > 0:
+    from trello.card import run
+    return run(configFileName, options, arguments)
+
   print(parser.print_help())
 
 if __name__ == '__main__':

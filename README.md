@@ -35,5 +35,9 @@ cd ~/trello-client-master/python
 
 ./trello_client -l list //获取ID为list的list信息
 ./trello_client -lc list //获取ID为list的list中card列表信息
-//其中list为执行./trello_client -bl board 获取的lists列表信息中包含在"（）"中的值            
+//其中list为执行./trello_client -bl board 获取的lists列表信息中包含在"（）"中的值
+
+./trello_client -c card //获取ID为card的card信息
+./trello_client -cm card //获取ID为card的card中member列表信息
+//其中card为执行./trello_client -lc list 获取的card列表信息中包含在"（）"中的值
 ```

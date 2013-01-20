@@ -22,8 +22,3 @@ class Read(ReadBase):
       print('过期时间：%s' % info['due'])
       print('最后活动时间：%s' % info['dateLastActivity'])
       print('描述：%s' % info['desc'])
-
-  def members(self, id):
-    super(Read, self).members(
-      '%s/%s/members' % (self.baseUrl, id)
-    )

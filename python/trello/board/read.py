@@ -21,11 +21,6 @@ class Read(ReadBase):
       print('链接：%s' % info['url'])
       print('描述：%s' % info['desc'])
 
-  def members(self, id):
-    super(Read, self).members(
-      '%s/%s/members' % (self.baseUrl, id)
-    )
-
   def lists(self, id):
     lists = self.trello.getData(
       '%s/%s/lists' % (self.baseUrl, id),

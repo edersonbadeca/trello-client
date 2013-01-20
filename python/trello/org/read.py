@@ -5,6 +5,7 @@ class Read(ReadBase):
   def __init__(self, configFileName):
     super(Read, self).__init__(configFileName)
     self.key = 'organization'
+    self.baseUrl = self.config.getApi(self.key, 'item')
 
   def orgs(self):
     orgs = self.trello.getData(
@@ -14,14 +15,9 @@ class Read(ReadBase):
       for org in orgs:
         print(org['displayName'] + '（' + org['name'] + '）')
 
-  def members(self, name):
-    super(Read, self).members(
-      '%s/%s/members' % (self.config.getApi(self.key, 'item'), name)
-    )
-
   def info(self, name):
     info = self.trello.getData(
-      '%s/%s' % (self.config.getApi(self.key, 'item'), name),
+      '%s/%s' % (self.baseUrl, name),
       '&members=admins'
     )
     if info:
@@ -38,7 +34,7 @@ class Read(ReadBase):
 
   def boards(self, name):
     boards = self.trello.getData(
-      '%s/%s/boards' % (self.config.getApi(self.key, 'item'), name),
+      '%s/%s/boards' % (self.baseUrl, name),
       '&filter=organization&fields=name,pinned'
     )
     if boards:

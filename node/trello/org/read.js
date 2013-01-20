@@ -3,6 +3,7 @@ var Read = {
   {
     require('../base/read').init(Read, configFileName);
     Read.key = 'organization';
+    Read.baseUrl = Read.config.getApi(Read.key, 'item');
   },
 
   orgs: function()
@@ -19,23 +20,15 @@ var Read = {
     );
   },
 
-  members: function(name)
-  {
-    Read.super_callback.members(
-      Read.config.getApi(Read.key, 'item') + '/' + name + '/members'
-    );
-  },
-
   info: function(name)
   {
     Read.trello.getData(
-      Read.config.getApi(Read.key, 'item') + '/' + name, '&members=admins',
+      Read.baseUrl + '/' + name, '&members=admins',
       function(info) {
         if (info) {
           console.log('名称：%s（%s）', info.displayName, info.name);
           console.log('Trello链接：%s', info.url);
           console.log('官网：%s', info.website);
-          console.log('描述：%s', info.desc);
           if (info.members) {
             var admins = [];
             for (var index in info.members) {
@@ -46,6 +39,7 @@ var Read = {
             }
             console.log('管理员：%s', admins.join('，'));
           }
+          console.log('描述：%s', info.desc);
         }
       }
     );
@@ -54,7 +48,7 @@ var Read = {
   boards: function(name)
   {
     Read.trello.getData(
-      Read.config.getApi(Read.key, 'item') + '/' + name + '/boards',
+      Read.baseUrl + '/' + name + '/boards',
       '&filter=organization&fields=name,pinned',
       function(boards) {
         if (boards) {

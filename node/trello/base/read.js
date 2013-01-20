@@ -1,17 +1,15 @@
 var Read = {
   init: function(obj, configFileName)
   {
-    Read.obj = obj;
     require('./base').init(obj, configFileName);
-    obj.super_callback = {
-      members: Read.members
-    };
+    Read.obj = obj;
+    obj.members = Read.members;
   },
 
-  members: function(api)
+  members: function(value)
   {
     Read.obj.trello.getData(
-      api, null,
+      Read.obj.baseUrl + '/' + value + '/members', null,
       function(members) {
         if (members) {
           for (var index in members) {

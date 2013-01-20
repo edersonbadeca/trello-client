@@ -26,13 +26,6 @@ var Read = {
     );
   },
 
-  members: function(id)
-  {
-    Read.super_callback.members(
-      Read.baseUrl + '/' + id + '/members'
-    );
-  },
-
   lists: function(id)
   {
     Read.trello.getData(

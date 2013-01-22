@@ -23,8 +23,16 @@ var Read = {
             console.log('标签：%s', labels.join('，'));
           }
           console.log('链接：%s', info.url);
-          console.log('过期时间：%s', info.due);
-          console.log('最后活动时间：%s', info.dateLastActivity);
+          console.log(
+            '过期时间：%s',
+            Read.dateFormat(new Date(info.due), 'yyyy-MM-dd HH:mm:ss')
+          );
+          console.log(
+            '最后活动时间：%s',
+            Read.dateFormat(
+              new Date(info.dateLastActivity), 'yyyy-MM-dd HH:mm:ss'
+            )
+          );
           console.log('描述：%s', info.desc);
         }
       }

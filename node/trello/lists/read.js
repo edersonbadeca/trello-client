@@ -12,7 +12,7 @@ var Read = {
       '&fields=name,closed',
       function(info) {
         if (info) {
-          console.log('名称：%s（%s）：%s', info.name, info.id);
+          console.log('名称：%s（%s）', info.name, info.id);
           console.log('关闭：%s', info.closed ? '是' : '否');
         }
       }

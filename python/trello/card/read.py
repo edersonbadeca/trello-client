@@ -19,6 +19,6 @@ class Read(ReadBase):
         labels = [label['name'] for label in info['labels']]
         print('标签：%s' % '，'.join(labels))
       print('链接：%s' % info['url'])
-      print('过期时间：%s' % info['due'])
-      print('最后活动时间：%s' % info['dateLastActivity'])
+      print('过期时间：%s' % self.utctimeFormat(info['due']))
+      print('最后活动时间：%s' % self.utctimeFormat(info['dateLastActivity']))
       print('描述：%s' % info['desc'])

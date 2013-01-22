@@ -9,9 +9,12 @@
 cd ~/
 wget https://nodeload.github.com/NanJingBoy/trello-client/zip/master
 unzip master
-pip install oauth2 //安装python相关依赖
+//安装python相关依赖
+pip install oauth2
+pip install python-dateutil==1.5
+//安装node相关依赖
 cd ~/trello-client-master/node
-npm install oauth //安装node相关依赖
+npm install oauth
 //配置
 cd trello-client-master
 cp config_example.json config.json
